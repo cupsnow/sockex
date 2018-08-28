@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<project name="sockex1" default="dist">
+  <property environment="env" />
+  <property name="srcdir" value="${basedir}" />
+  <condition property="builddir" value="${env.BUILDDIR}" else="${basedir}/build/java">
+    <isset property="env.BUILDDIR" />
+  </condition>
+  <condition property="destdir" value="${env.DESTDIR}" else="${basedir}/destdir">
+    <isset property="env.DESTDIR" />
+  </condition>
+  <condition property="javatarget" value="${env.JAVATARGET}" else="1.8">
+    <isset property="env.JAVATARGET" />
+  </condition>
+  <condition property="javadebug" value="${env.JAVADEBUG}" else="false">
+    <isset property="env.JAVADEBUG" />
+  </condition>
+
+  <echo message="build.xml ... builddir: ${builddir}"/>
+  <echo message="build.xml ... destdir: ${destdir}"/>
+  <echo message="build.xml ... javatarget: ${javatarget}"/>
+  <echo message="build.xml ... javadebug: ${javadebug}"/>
+  
+  <path id="classpath.ext" cache="true">
+    <fileset dir="${srcdir}/lib" erroronmissingdir="false">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+  <path id="classpath.dest">
+    <fileset dir="${destdir}/lib" erroronmissingdir="false">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+
+  <target name="sockex1.build" description="Build app">
+    <mkdir dir="${builddir}/sockex1" />
+    <javac sourcepath="" srcdir="${srcdir}" destdir="${builddir}/sockex1" 
+        includeantruntime="false" target="${javatarget}" source="${javatarget}"
+        debug="${javadebug}">
+      <include name="libsockex1/**/*.java" />
+      <include name="sockex1/**/*.java" />
+      <classpath>
+        <path refid="classpath.ext" />
+        <path refid="classpath.dest" />
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="sockex1.dist" description="Build app" depends="sockex1.build">
+    <mkdir dir="${destdir}/bin" />
+    <copy todir="${builddir}/sockex1">
+      <fileset dir="${srcdir}/sockex1" 
+          includes="**/Sockex1.help **/Sockex1.test **/Sockex1.properties" />
+    </copy>
+    <jar destfile="${destdir}/bin/${ant.project.name}.jar" 
+        basedir="${builddir}/sockex1" manifest="${srcdir}/Manifest">
+ <!--
+      <zipgroupfileset dir="${destdir}/lib">
+        <include name="${ant.project.name}-getopt.jar" />
+        <include name="${ant.project.name}-json.jar" />
+      </zipgroupfileset>
+ -->
+      <manifest>
+        <attribute name="Specification-Version" value="${version}" />
+        <attribute name="Main-Class" value="org.jl.sockex1.Sockex1" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="dist" description="Distributable project" depends="sockex1.dist" />
+
+
+</project>
