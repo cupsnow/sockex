@@ -11,7 +11,7 @@ import org.jl.libsockex1.Server;
 
 public class Sockex1 {
 	private static Class<?> clz = Sockex1.class;
-	private static Logger logger = new LoggerFactoryImpl().getInstance(
+	private static Logger logger = new LoggerFactoryImpl().getLogger(
 			clz.getSimpleName());
 	protected static String TAG = clz.getSimpleName();
 

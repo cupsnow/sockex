@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="sockex1" default="dist">
+<project name="sockex" default="dist">
   <property environment="env" />
   <property name="srcdir" value="${basedir}" />
   <condition property="builddir" value="${env.BUILDDIR}" else="${basedir}/build/java">

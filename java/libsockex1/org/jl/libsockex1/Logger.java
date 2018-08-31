@@ -1,7 +1,7 @@
 package org.jl.libsockex1;
 
 public class Logger {
-	public static LoggerFactory factory;
+	public static Factory factory;
 
 	protected Logger(String name) {}
 	public void log(Level level, String tag, String msg) {}
@@ -11,7 +11,7 @@ public class Logger {
 	public void e(String tag, String msg) {log(Level.ERROR, tag, msg);}
 
 	public static Logger getInstance(String name) {
-		return factory != null ? factory.getInstance(name) : new Logger(name);
+		return factory != null ? factory.getLogger(name) : new Logger(name);
 	}
 
 	public static Logger.Level logLevel() {
@@ -40,5 +40,11 @@ public class Logger {
 			}
 			return arr[val];
 		}
+	}
+
+	public static interface Factory {
+		public Logger getLogger(String name);
+		public Level logLevel();
+		public void logLevel(Level level);
 	}
 }

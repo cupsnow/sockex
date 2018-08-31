@@ -3,9 +3,8 @@ package org.jl.sockex1;
 import java.util.Date;
 
 import org.jl.libsockex1.Logger;
-import org.jl.libsockex1.LoggerFactory;
 
-public class LoggerFactoryImpl implements LoggerFactory {
+public class LoggerFactoryImpl implements Logger.Factory {
 	Logger.Level logLevel = Logger.Level.INFO;
 
 	public LoggerFactoryImpl() {
@@ -13,7 +12,7 @@ public class LoggerFactoryImpl implements LoggerFactory {
 	}
 
 	@Override
-	public Logger getInstance(String name) {
+	public Logger getLogger(String name) {
 		return new Logger(name) {
 			@Override
 			public void log(Logger.Level level, String tag, String msg) {
