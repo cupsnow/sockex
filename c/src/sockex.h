@@ -7,12 +7,19 @@
 #include <stdarg.h>
 #include <string.h>
 #include <time.h>
+#include <errno.h>
 
 #include <sys/types.h>
+
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define ALOE_ARRAYSIZE(_arr) (sizeof(_arr) / sizeof((_arr)[0]))
 
 #define aloe_log_debug(...) aloe_log_printf( \
 		aloe_log_level_debug | aloe_log_mask_force_ln | aloe_log_mask_show_ts, \

@@ -44,3 +44,8 @@ sockex_install: $(sockex_BUILDDIR)/bin/sockex
 	done
 
 TARGET+=sockex
+
+#------------------------------------
+#
+install clean distclean:
+	[ -n "$(strip $(TARGET))" ] && $(MAKE) $(addsuffix _$@,$(TARGET))

@@ -28,8 +28,10 @@ size_t aloe_log_vsnprintf(void *_data, size_t cap, int _level, const void *func,
 	if (show_ts) {
 		r = aloe_log_ts(data + lmt, cap - lmt, level, func, lno, tag);
 		if (r < 0 || (lmt += r) >= cap) goto abbr;
-		*(data + lmt) = ' ';
-		if ((lmt += 1) >= cap) goto abbr;
+		if (r > 0) {
+			*(data + lmt) = ' ';
+			if ((lmt += 1) >= cap) goto abbr;
+		}
 	}
 
 	if (tag) {
